@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chl.face.mapper.RecordMapper">
+    <resultMap id="record" type="com.chl.face.entity.Record">
+        <id column="id" property="id"></id>
+        <result column="personId" property="personId" jdbcType="VARCHAR"></result>
+        <result column="time" property="time" jdbcType="VARCHAR"></result>
+        <result column="identifyType" property="identifyType" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into record (personId,time,identifyType) values ( #{personId} ,#{time},#{identifyType})
+    </insert>
+
+    <select id="findById" resultMap="record">
+       select * from record where personId=#{id}
+    </select>
+
+
+</mapper>

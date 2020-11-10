@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="/all/css/bootstrap.min.css">
+    <script src="/all/js/jquery-3.5.1.min.js"></script>
+    <script src="/all/js/bootstrap.min.js"></script>
+    <!--    <script src="/js/jquery-3.5.1.min.js"></script>-->
+<!--    <link rel="stylesheet" href="/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">-->
+<!--    <script src="/js/bootstrap.min.js"></script>-->
+</head>
+
+
+<body background="/all/bg.jpg" style=" background-repeat:no-repeat ;background-size:100% 100%;
+background-attachment: fixed;">
+<div class="row">
+
+
+
+    <div >
+        <h1>点击注册人脸，请移步人脸识别设备注册人脸</h1>
+
+        <form method="post" action="/registry/face">
+            <input th:value="${session.user.id}" type="hidden" name="id">
+            <span th:text="${msg}"></span>
+            <input  type="submit" value="注册" class="btn-primary btn-lg text-center center-block" style="align-items: center" >
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

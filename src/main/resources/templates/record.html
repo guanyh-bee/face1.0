@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/all/css/bootstrap.min.css">
+    <script src="/all/js/jquery-3.5.1.min.js"></script>
+    <script src="/all/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Brand</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+                <li><a href="/toRecord">查看我的原始记录</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/toAnalysis">分析并查看考勤报表</a></li>
+                <li th:if="${session.user.isFaced == 0}"><a href="/registry/toFace">还没注册人脸，是否去注册？</a></li>
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+        <form class="form-inline" action="/record" method="post">
+            <div class="form-group">
+                <span style="font-size: large">选择时间</span><input type="datetime-local" id="begintime" name="beginTime">------<input type="datetime-local" id="endtime" name="endTime">
+            </div>
+            <button type="submit" class="btn btn-primary">查询</button>
+        </form>
+
+
+        <table class="table table-bordered" th:if="${data != null}" >
+
+            <tr>
+                <td>姓名</td>
+                <td>编号</td>
+                <td>时间</td>
+            </tr>
+
+
+            <tr th:each="all:${data}">
+                <td th:text="${all.getName()}">1</td>
+                <td th:text="${all.getRecord().getPersonId()}">1</td>
+                <td th:text="${#dates.format(all.getRecord().getTime(), 'yyyy年MM月dd日 HH:mm:ss')}">1</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+
+<script>
+
+    var format = "";
+    var format1 = "";
+    $(document).ready(function (){
+        getFormat();
+        document.getElementById("endtime").value = format;
+        getFormat1();
+        document.getElementById("begintime").value = format1;
+
+    });
+
+
+
+    //构造符合datetime-local格式的当前日期
+    function getFormat(){
+        format = "";
+        var nTime = new Date();
+        format += nTime.getFullYear()+"-";
+        format += (nTime.getMonth()+1)<10?"0"+(nTime.getMonth()+1):(nTime.getMonth()+1);
+        format += "-";
+        format += nTime.getDate()<10?"0"+(nTime.getDate()):(nTime.getDate());
+        format += "T";
+        format += nTime.getHours()<10?"0"+(nTime.getHours()):(nTime.getHours());
+        format += ":";
+        format += nTime.getMinutes()<10?"0"+(nTime.getMinutes()):(nTime.getMinutes());
+        // format += ":00";
+    }
+
+    function getFormat1(){
+        format1 = "";
+        var nTime = new Date();
+        format1 += nTime.getFullYear()+"-";
+        format1 += (nTime.getMonth()+1)<10?"0"+(nTime.getMonth()):(nTime.getMonth());
+        format1 += "-";
+        format1 += nTime.getDate()<10?"0"+(nTime.getDate()):(nTime.getDate());
+        format1 += "T";
+        format1 += nTime.getHours()<10?"0"+(nTime.getHours()):(nTime.getHours());
+        format1 += ":";
+        format1 += nTime.getMinutes()<10?"0"+(nTime.getMinutes()):(nTime.getMinutes());
+        // format1 += ":00";
+    }
+
+</script>
+</html>
